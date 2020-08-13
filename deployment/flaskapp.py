@@ -7,14 +7,36 @@ from werkzeug.utils import secure_filename
 import cv2
 import urllib.request
 
+import argparse
+
 # import class inf
 from maskrcnn_inf import maskrcnn_inf
 
-model = maskrcnn_inf()
+
 
 app = Flask(__name__)
 
 ALLOWED_EXTENSIONS = set(['jpg', 'jpeg', 'png'])
+
+###############################################
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--cpu', action='store',
+                    default=1,
+                    dest='gpu',
+                    help='Config CPU : 1 use | 0 not, default : 1')
+parser.add_argument('--port', action='store',
+                    default=8000,
+                    dest='port',
+                    help='Open port local host default : 8000')
+
+results = parser.parse_args()
+cpu = int(results.gpu)
+port = int(results.port)
+
+model = maskrcnn_inf(cpu= cpu)
+
+###############################################
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -46,3 +68,7 @@ def run_inf_maskrcnn():
         cv2.imwrite(output.astype('uint8'), "./../files/out.png")
 
         return send_file("./../files/out.png")
+
+if __name__ == '__main__':
+    
+    app.run(port=port, threaded=False, debug=False)

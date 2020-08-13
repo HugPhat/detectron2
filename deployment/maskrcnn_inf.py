@@ -15,8 +15,13 @@ import cv2
 
 
 class maskrcnn_inf:
-    def __init__(self, thresh=0.5, model='50FPN'):
+    def __init__(self, thresh=0.5, model='50FPN', cpu= True):
         self.config = get_cfg()
+
+        # RUN on CPU
+        if cpu:
+            cfg.MODEL.DEVICE = 'cpu'
+        
         self.config.MODEL.ROI_HEADS.SCORE_THRESH_TEST = thresh
         if model == '50FPN':
             self.config.merge_from_file(model_zoo.get_config_file(
