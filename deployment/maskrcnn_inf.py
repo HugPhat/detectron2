@@ -20,7 +20,7 @@ class maskrcnn_inf:
 
         # RUN on CPU
         if cpu:
-            cfg.MODEL.DEVICE = 'cpu'
+            self.config.MODEL.DEVICE = 'cpu'
         
         self.config.MODEL.ROI_HEADS.SCORE_THRESH_TEST = thresh
         if model == '50FPN':
