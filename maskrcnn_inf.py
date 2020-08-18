@@ -85,7 +85,7 @@ class maskrcnn_inf:
         item = {'label': clss, 'coords': []}
         contour = contour[-1]
         for i in range(0, len(contour) - 2, 2):
-          item['coords'].append({'x': contour[i + 1], 'y': contour[i]})
+          item['coords'].append({'x': int(contour[i + 1]), 'y': int(contour[i])})
         result['annotations'].append(item)
 
       result = {"result": result}

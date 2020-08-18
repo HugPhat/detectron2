@@ -71,11 +71,15 @@ def run_inf_maskrcnn():
                 {'message': 'Allowed file types are  jpg, jpeg'})
             resp.status_code = 400
             return resp
-        output = model.predict(img=img, show=True)
+        output = model.predict(img=img, show=False)
         #
-        cv2.imwrite("./files/out.png", output)
+        #cv2.imwrite("./files/out.png", output)
 
-        return send_file("./files/out.png", mimetype='image/jpg')
+        #return send_file("./files/out.png", mimetype='image/jpg')
+
+        resp = jsonify(output)
+        resp.status_code = 200
+        return resp
 
 
 if __name__ == '__main__':
