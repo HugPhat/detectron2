@@ -1,5 +1,6 @@
 #
-import torch, torchvision
+import torch
+import torchvision
 #
 import detectron2
 from detectron2 import model_zoo
