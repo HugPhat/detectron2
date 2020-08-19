@@ -30,7 +30,23 @@ class maskrcnn_inf:
                 ("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")))
             self.config.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(
                 "COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
-
+        elif model == '101FPN':
+            self.config.merge_from_file(model_zoo.get_config_file(
+                ("COCO-InstanceSegmentation/mask_rcnn_R_101_FPN_3x.yaml")))
+            self.config.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(
+                "COCO-InstanceSegmentation/mask_rcnn_R_101_FPN_3x.yaml")
+        elif model == 'panoptic':
+            self.config.merge_from_file(model_zoo.get_config_file(
+                ("COCO-PanopticSegmentation/panoptic_fpn_R_101_3x.yaml")))
+            self.config.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(
+                "COCO-PanopticSegmentation/panoptic_fpn_R_101_3x.yaml")
+        elif model == '101X':
+            self.config.merge_from_file(model_zoo.get_config_file(
+                ("COCO-InstanceSegmentation/mask_rcnn_X_101_32x8d_FPN_3x.yaml")))
+            self.config.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(
+                "COCO-InstanceSegmentation/mask_rcnn_X_101_32x8d_FPN_3x.yaml")
+        else:
+            raise RuntimeError(" model should be [50FPN] < [101FPN] < [panoptic] < [101X] ")
         self.predictor = DefaultPredictor(self.config)
         self.metadata = MetadataCatalog.get(self.config.DATASETS.TRAIN[0])
 
@@ -45,7 +61,7 @@ class maskrcnn_inf:
           result.append([])
         else:
           contours = [x.flatten() for x in contours]
-          contours = [x for x in contours if len(x) >= 6]
+          contours = [x for x in contours if len(x) >= 2]
           result.append(contours)
       return result
 

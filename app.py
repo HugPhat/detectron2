@@ -34,7 +34,21 @@ results = parser.parse_args()
 cpu = int(results.gpu)
 port = int(results.port)
 
-model = maskrcnn_inf(cpu=cpu)
+'''
+CONFIG Model
+    
+    * maskrcnn_inf(model, cpu)
+        * model:
+            -------
+            50FPN : lowest accuracy
+            101FPN : good accuracy
+            panoptic : good accuracy
+            101X: good acc
+            --------
+        * cpu: when you switch to GPU -> cpu= False
+
+'''
+model = maskrcnn_inf(model='101X', cpu=True)
 
 ###############################################
 
